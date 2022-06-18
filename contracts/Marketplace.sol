@@ -41,7 +41,7 @@ event Bout(
     uint tokenId,
     uint price,
     address indexed seller,
-    address indexed buyer,
+    address indexed buyer
 );
 
 constructor (uint _charityRoyalty)
