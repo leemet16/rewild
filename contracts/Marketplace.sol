@@ -14,17 +14,19 @@ contract Marketplace is ReentrancyGuard
     address payable public immutable charityAccount; //the account that will disburse funds to charitable partners
     uint public immutable charityRoyalty; //royalty from all sales that goes to charity
 
-struct Item {
+struct MarketItem {
     uint itemId;
     IERC1155 token; //token covers all cases of being NFT, soft-fungible token, or non-fungible token
     uint tokenId;
+    uint amount;
     uint price;
     address payable seller;  //in addition to being the seller, they will be the receiver of a HIO
+    address payable owner;
     bool sold;
 }
 
 
-mapping (uint => Item) public items; //mapping of items where the itemId will lead to a specific Item
+mapping (uint => MarketItem) public marketItems; //mapping of marketItems where the itemId will lead to a specific MarketItem
 
 
 event Offered(
@@ -49,6 +51,11 @@ constructor (uint _charityRoyalty)
     charityAccount = payable(msg.sender);
     charityRoyalty = _charityRoyalty;
 
+}
+
+function listToken(uint tokenId, uint amount, uint price) external{
+    require(tokenId > 0, "Token does not exist");
+    
 }
 
 }
