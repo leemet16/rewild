@@ -6,7 +6,7 @@ const { ethers } = require('hardhat');
 //SAPPLING = 2 and 10**10;
 //TREE = 3 and 10**10;
 
-describe('Rewild', function () {
+describe('RewildMarketplace', function () {
     it("deploy and check balances", async function () {
         const accounts = await ethers.getSigners();
 
