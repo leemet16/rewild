@@ -51,11 +51,21 @@ constructor (uint _charityRoyalty)
     charityAccount = payable(msg.sender);
     charityRoyalty = _charityRoyalty;
 
+    //seed (no pun intended!) the marketplace by listing and selling seeds
+    //default price is $5 CUSD for 5 seeds 
+
 }
 
+
+
+
+//make it possible for individuals to list tokens for sale!
 function listToken(uint tokenId, uint amount, uint price) external{
-    require(tokenId > 0, "Token does not exist");
+    require(amount > 0, "Must list at list 1 token");
+    require(price > 5, "The price must be greater than $5");
+
     
+
 }
 
 }
