@@ -10,5 +10,13 @@ import "hardhat/console.sol";
 
 contract Marketplace is ReentrancyGuard
 {
+    //set up account and royalty rate for the charity
+    address payable public immutable charityAccount; //the account that will disburse funds to charitable partners
+    uint public immutable charityRoyalty; //royalty from all sales that goes to charity
+
+    //set up account and fees to keep our marketplace going - keep this minimal!
+    address payable public immutable feeAccount; //the account that will receive fees for running the marketplace
+    uint public immutable feePercent; // processing fees
+
     
 }
