@@ -3,7 +3,7 @@ const { ethers } = require('hardhat');
 
 //SEED = 0 and 10**10;
 //SPROUT = 1 and 10**10;
-//SAPPLING = 2 and 10**10;
+//SAPLING = 2 and 10**10;
 //TREE = 3 and 10**10;
 //HIO = 4 and 10**10;
 
