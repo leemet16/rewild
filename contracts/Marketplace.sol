@@ -3,12 +3,23 @@
 //published via MIT license as well. https://github.com/dappuniversity/nft_marketplace
 
 
+//many todo items still!
+// support for CUSD
+// pre-populating the marketplace with our tokens
+// enforce the buying / selling path to get to a tree
+// sending sellers a HIO as they support the rewilding effort
+// add a UI
+
 pragma solidity ^0.8.1;
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "hardhat/console.sol";
+import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract Marketplace is ReentrancyGuard
+
+
+contract Marketplace is ReentrancyGuard, ERC1155Holder
 {
     //set up account and royalty rate for the charity
     address payable public immutable charityAccount; //the account that will disburse funds to charitable partners
@@ -26,29 +37,20 @@ struct MarketItem {
     bool sold;
 }
 
+IERC1155 private tokenContract;
 
 mapping (uint => MarketItem) public marketItems; //mapping of marketItems where the itemId will lead to a specific MarketItem
 
+using Counters for Counters.Counter;
+Counters.Counter private _tokenIds;
+Counters.Counter private _tokensSold;
 
-event Offered(
-    uint itemId,
-    address indexed token,
-    uint tokenId,
-    uint price,
-    address indexed seller
-    );
 
-event Bout(
-    uint itemId,
-    address indexed token,
-    uint tokenId,
-    uint price,
-    address indexed seller,
-    address indexed buyer
-);
 
-constructor (uint _charityRoyalty)
+constructor (address _tokenContract, uint _charityRoyalty)
 {
+    tokenContract = IERC1155(_tokenContract);
+
     charityAccount = payable(msg.sender);
     charityRoyalty = _charityRoyalty;
 
@@ -59,11 +61,15 @@ constructor (uint _charityRoyalty)
 
 // List item to offer on the marketplace
     function listItem(IERC1155 _token, uint _tokenId, uint _price, uint _amount) external nonReentrant {
+        
+        //start with some basic checks
+        //will need to enhance on price
         require(_price > 0, "Price must be greater than zero");
         require(_amount > 0, "Must list at list 1 token");
 
-        // increment itemCount
-        itemCount ++;
+        
+        _tokenIds.increment();
+        uint256 tokenId = _tokenIds.current();
 
         // transfer token
         _token.safeTransferFrom(msg.sender, address(this), _tokenId, _amount, "");

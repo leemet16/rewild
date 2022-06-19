@@ -20,7 +20,7 @@ beforeEach(async function () {
   Marketplace = await ethers.getContractFactory('Marketplace');
 
   //to deploy, remember that the constructor takes the royalty percentage!
-  marketplace = await Marketplace.deploy(charityRoyalty);
+  marketplace = await Marketplace.deploy(reWild.address, charityRoyalty);
   await marketplace.deployed();
   
   reWildAddress = reWild.address;
@@ -42,6 +42,10 @@ describe('Seeds minted', function () {
     //check balances for each of our tokens - seeds
     const seedBalance = await reWild.balanceOf(accounts[0].address, 0)
     expect(10**10).to.equal(Number(seedBalance.toString()));
+
+    //list seeds for sale!
+    //    function listItem(IERC1155 _token, uint _tokenId, uint _price, uint _amount) external nonReentrant {
+    //marketplace.listItem(reWild.)
 
   });
 });
