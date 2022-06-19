@@ -5,6 +5,8 @@ const { ethers } = require('hardhat');
 //SPROUT = 1 and 10**10;
 //SAPPLING = 2 and 10**10;
 //TREE = 3 and 10**10;
+//HIO = 4 and 10**10;
+
 
 describe('RewildMarketplace', function () {
     it("deploy and check balances", async function () {
@@ -29,6 +31,10 @@ describe('RewildMarketplace', function () {
       //check balances for each of our tokens - trees
       const treeBalance = await reWild.balanceOf(accounts[0].address, 3)
       expect(10**10).to.equal(Number(treeBalance.toString()));
+
+      //check balances for each of our tokens - trees
+      const hioBalance = await reWild.balanceOf(accounts[0].address, 4)
+      expect(10**10).to.equal(Number(hioBalance.toString()));
 
     });
   });
