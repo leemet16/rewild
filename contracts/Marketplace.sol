@@ -13,6 +13,7 @@ contract Marketplace is ReentrancyGuard
     //set up account and royalty rate for the charity
     address payable public immutable charityAccount; //the account that will disburse funds to charitable partners
     uint public immutable charityRoyalty; //royalty from all sales that goes to charity
+    uint public itemCount; 
 
 struct MarketItem {
     uint itemId;
@@ -56,16 +57,31 @@ constructor (uint _charityRoyalty)
 
 }
 
+// List item to offer on the marketplace
+    function listItem(IERC1155 _token, uint _tokenId, uint _price, uint _amount) external nonReentrant {
+        require(_price > 0, "Price must be greater than zero");
+        require(_amount > 0, "Must list at list 1 token");
 
+        // increment itemCount
+        itemCount ++;
 
+        // transfer token
+        _token.safeTransferFrom(msg.sender, address(this), _tokenId, _amount, "");
+        
 
-//make it possible for individuals to list tokens for sale!
-function listToken(uint tokenId, uint amount, uint price) external{
-    require(amount > 0, "Must list at list 1 token");
-    require(price > 5, "The price must be greater than $5");
+        // add new item to items mapping
+        marketItems[itemCount] = MarketItem (
+            itemCount,
+            _token,
+            _tokenId,
+            _amount,
+            _price,
+            payable(msg.sender),
+            payable(msg.sender),
+            false
+        );
+        
+    }
 
-    
-
-}
 
 }
