@@ -1,7 +1,8 @@
-# Rewild by Trembling Aspens
+# Project Name
+Re:Wild
 
-# Project Name: Re:Wild
-# Team Name: Trembling Aspens
+# Team Name
+Trembling Aspens
 
 # Summary
 
